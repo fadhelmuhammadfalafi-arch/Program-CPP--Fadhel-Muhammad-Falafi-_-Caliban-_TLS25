@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int t;
+    cin >> t; // input detik yang mau dicek
+
+    int offset = 79; // biar t=45..47 = Kuning
+    int pos = ((t + offset - 1) % 103) + 1;
+
+    if (pos >= 1 && pos <= 20) {
+        cout << "Hijau\n";
+    } 
+    else if (pos >= 21 && pos <= 23) {
+        cout << "Kuning\n";
+    } 
+    else {
+        cout << "Merah\n";
+    }
+
+    return 0;
+}
