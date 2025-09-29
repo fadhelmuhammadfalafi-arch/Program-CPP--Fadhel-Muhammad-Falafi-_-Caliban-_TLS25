@@ -1,0 +1,57 @@
+#include <iostream>
+#include <string>
+#include <cctype>
+using namespace std;
+
+// Reverse string in-place (user-defined, tidak pakai std::reverse)
+void userDefinedReverse(string &s) {
+    int i = 0, j = (int)s.size() - 1;
+    while (i < j) {
+        char tmp = s[i];
+        s[i] = s[j];
+        s[j] = tmp;
+        i++; j--;
+    }
+}
+
+bool isVowel(char c) {
+    char lc = (char)tolower((unsigned char)c);
+    return lc == 'a' || lc == 'e' || lc == 'i' || lc == 'o' || lc == 'u';
+}
+
+int main() {
+    string word;
+    // Input kata (gunakan cin sesuai ketentuan)
+    cout << "Masukkan kata asli" << endl;
+    cin >> word;
+
+    if (word.empty()) {
+        cout << endl;
+        return 0;
+    }
+
+    // 1. Ambil semua konsonan (preserve case)
+    string consonants = "";
+    for (char c : word) {
+        if (isalpha((unsigned char)c) && !isVowel(c)) {
+            consonants.push_back(c);
+        }
+    }
+
+    // 2. Balik konsonan (user-defined)
+    userDefinedReverse(consonants);
+
+    // 3. Ambil ASCII dari huruf pertama kata awal
+    int asciiFirst = (int) (unsigned char) word[0];
+
+    // 4. Sisipkan ASCII (sebagai string angka) di posisi ceil(L/2)
+    string asciiStr = to_string(asciiFirst);
+    int L = (int)consonants.size();
+    int insertPos = (L + 1) / 2; // ceil(L/2)
+
+    // Bentuk hasil: bagian awal + asciiStr + bagian akhir
+    string result = consonants.substr(0, insertPos) + asciiStr + consonants.substr(insertPos);
+
+    cout << "Berikut sandi anda: " << result << endl;
+    return 0;
+}
