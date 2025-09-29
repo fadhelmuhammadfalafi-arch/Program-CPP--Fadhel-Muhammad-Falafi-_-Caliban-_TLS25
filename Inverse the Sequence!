@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+
+int reverseInteger(int n) {
+    bool negative = n < 0;
+    n = negative ? -n : n; // ambil nilai absolut
+    int reversed = 0;
+
+    while (n != 0) {
+        int digit = n % 10;
+        reversed = reversed * 10 + digit;
+        n /= 10;
+    }
+
+    return negative ? -reversed : reversed;
+}
+
+int main() {
+    int n;
+    cout << "Masukkan Panjang Array" << endl;
+    cin >> n; // input panjang array
+    int arr[n];
+
+    for (int i = 0; i < n; i++) {
+        cout << "Masukkan Elemen ke-" << (i+1)<< endl;
+        cin >> arr[i]; // input elemen array
+    }
+
+    int sum = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (i % 2 == 0) { // indeks genap
+            arr[i] = reverseInteger(arr[i]);
+        }
+        sum += arr[i];
+    }
+
+    // Output hasil transformasi array
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    // Output jumlah elemen hasil transformasi
+    cout << sum << endl;
+
+    return 0;
+}
