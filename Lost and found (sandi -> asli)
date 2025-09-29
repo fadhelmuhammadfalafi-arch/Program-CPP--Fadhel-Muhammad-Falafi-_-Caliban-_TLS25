@@ -1,0 +1,52 @@
+#include <iostream>
+#include <string>
+#include <cctype>
+using namespace std;
+
+// reverse user-defined
+void userDefinedReverse(string &s) {
+    int i = 0, j = (int)s.size() - 1;
+    while (i < j) {
+        char tmp = s[i];
+        s[i] = s[j];
+        s[j] = tmp;
+        i++; j--;
+    }
+}
+
+int main() {
+    string password;
+    cout << "Masukkan Sandi dari Mesin" << endl;
+    cin >> password;
+
+    string digits = "";
+    string lettersOnly = "";
+
+    // Pisahkan angka dan huruf
+    for (char c : password) {
+        if (isdigit((unsigned char)c)) digits.push_back(c);
+        else lettersOnly.push_back(c);
+    }
+
+    if (digits.empty()) {
+        cerr << "Error: tidak menemukan kode ASCII dalam sandi.\n";
+        return 0;
+    }
+
+    // Konversi digits ke integer (ASCII)
+    int asciiVal = stoi(digits);
+    char firstChar = (char)asciiVal;
+
+    // lettersOnly sekarang adalah hasil reverse (huruf) tanpa angka
+    // Untuk mendapatkan urutan konsonan asli, balik lettersOnly lagi
+    string consonants_original = lettersOnly;
+    userDefinedReverse(consonants_original);
+
+    // Output hasil rekonstruksi yang mungkin
+    cout << "ASCII inserted : " << digits << " -> char: '" << firstChar << "'" << endl;
+    cout << "Letters in password (after removing digits) : " << lettersOnly << endl;
+    cout << "Consonants (original order, recovered)      : " << consonants_original << endl;
+
+    cout << "\nNote: Vowels were removed by the machine and cannot be recovered from the password.\n";
+    return 0;
+}
